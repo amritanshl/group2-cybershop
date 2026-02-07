@@ -1,0 +1,180 @@
+﻿@model IEnumerable<CyberShopee.Models.Category>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@section Styles {
+<style>
+    @@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+        width: 100%;
+        min-height: 100vh;
+        background: #1a1a1a;
+    }
+
+    /* Full-bleed hero behind navbar (56px default navbar height) */
+    .hero-section {
+        min-height: calc(100vh - 56px);
+        width: 100vw;
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+        background-image: url('/images/ecommerce.png');
+        background-size: cover;
+        background-position: center 35%;
+        background-repeat: no-repeat;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, .50);
+        z-index: 1;
+    }
+
+    .content-wrapper {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        padding-inline: 16px;
+        max-width: 1280px;
+        margin-inline: auto;
+        text-align: center;
+    }
+
+        .site-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-size: 4.5rem;
+            color: transparent;
+            background: linear-gradient( 90deg, #ffd7ff 0%, #ffe8b3 20%, #d2ffd2 40%, #cfe4ff 60%, #ffd6e6 80%, #fff 100% );
+            -webkit-background-clip: text;
+            text-shadow: 0 0 6px rgba(255,255,255,0.4), 0 0 25px #ff00c8, 0 0 40px #00f5ff;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            animation: fadeInDown 1s ease-out;
+        }
+
+    .site-subtitle {
+        font-size: 1.2rem;
+        color: #fff;
+        margin-bottom: 2rem;
+        animation: fadeInUp 1s ease-out 0.5s backwards;
+    }
+
+    .button-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        max-width: 1200px;
+        padding: 0 2rem;
+        width: 100%;
+        animation: fadeIn 1s ease-out 1s backwards;
+    }
+
+    .category-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+
+        position: relative;
+        text-align: center;
+        padding: 1rem 2.2rem;
+
+        background: #1f1f1f;
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        border-radius: 50px;
+        box-shadow: 6px 6px 12px #0f0f0f, -6px -6px 12px #2f2f2f;
+
+        color: #fff;
+        font-weight: 500;
+        text-decoration: none;
+
+        transition: all 0.3s ease;
+        overflow: hidden;
+    }
+
+    .category-button::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        transform: translateX(-100%);
+        transition: 0.5s;
+    }
+
+    .category-button:hover {
+        transform: translateY(-5px) scale(1.02);
+        background: rgba(255, 255, 255, 0.2);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        color: #fff;
+    }
+
+    .category-button:hover::before {
+        transform: translateX(100%);
+    }
+
+    /* animations  */
+    @@keyframes fadeInDown {
+        from { opacity: 0; transform: translateY(-30px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+    @@keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+    @@keyframes fadeIn {
+        from { opacity: 0; }
+        to   { opacity: 1; }
+    }
+
+    /* Responsive tweaks */
+    @@media (max-width: 576px) {
+        .site-title { font-size: 2.25rem; letter-spacing: 2px; }
+        .site-subtitle { font-size: 1rem; }
+    }
+</style>
+}
+
+<div class="hero-section">
+    <div class="content-wrapper">
+        <h1 class="site-title">Cyber Shopee</h1>
+        <p class="site-subtitle">Bringing Quality and Comfort to Your Doorstep</p>
+
+        <div class="button-container">
+            @foreach (var category in Model)
+            {
+                <a asp-controller="Product"
+                   asp-action="ByCategory"
+                   asp-route-id="@category.CategoryId"
+                   class="category-button">
+                    <i class="fas fa-shopping-bag me-2"></i>
+                    @category.CategoryName
+                </a>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <!-- Page-specific scripts (optional) -->
+}
